@@ -19,8 +19,9 @@ type DaySteps struct {
 func (ds *DaySteps) Parse(datastring string) (err error) {
 	parts := strings.Split(datastring, ",")
 	if len(parts) != 2 {
-		return err
+		return errors.New("invalid parameters")
 	}
+
 	steps, err := strconv.Atoi(parts[0])
 	if err != nil {
 		return err
@@ -34,12 +35,12 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 	if err != nil {
 		return err
 	}
-	if duration < 0 {
+	if duration <= 0 {
 		return errors.New("duration must be positive")
 	}
 	ds.Duration = duration
 
-	return nil
+	return err
 }
 
 func (ds DaySteps) ActionInfo() (string, error) {
